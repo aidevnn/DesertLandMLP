@@ -1,5 +1,5 @@
 # DesertLandMLP
-Simple MultiLayerPerceptron with NumPy backend for computing 
+Simple MultiLayerPerceptron with NumPy like backend written in C# for computing.
 
 ## Output
 
