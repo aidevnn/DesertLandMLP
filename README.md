@@ -4,7 +4,7 @@ Simple MultiLayerPerceptron with NumPy like NDArray backend written in C#.
 ### Output
 
 ```
-Hello World! Xor MLP
+Hello World! Xor MLP. Backend NDArray<Double>
 Summary
 Input Shape:2
 Layer: Dense      Parameters:  24 Weights[In: 2 -> Out:8]
