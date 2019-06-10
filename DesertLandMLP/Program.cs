@@ -38,8 +38,8 @@ namespace DesertLandMLP
 
         public static void Main(string[] args)
         {
-            Run<float>();
-            //Run<double>();
+            //Run<float>();
+            Run<double>();
         }
     }
 }

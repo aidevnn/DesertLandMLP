@@ -467,7 +467,7 @@ namespace DesertLandMLP
                     sum = OpsT.Add(sum, OpsT.Mul(nD0.items[idx0], nD1.items[idx1]));
                 }
 
-                nd.items[m] = (Type)Convert.ChangeType(sum, typeof(Type));
+                nd.items[m] = sum;
             }
 
             return nd;
@@ -477,7 +477,7 @@ namespace DesertLandMLP
         #region Static Operations with Constants
 
         public static NDArray<Type> Zeros(params int[] shape) => new NDArray<Type>(shape);
-        public static NDArray<Type> Ones(params int[] shape) => new NDArray<Type>((Type)Convert.ChangeType(1, typeof(Type)), shape);
+        public static NDArray<Type> Ones(params int[] shape) => 1 + Zeros(shape);
 
         public static NDArray<Type> operator +(double v, NDArray<Type> nD) => nD.Apply(i => OpsT.Add(v, i));
         public static NDArray<Type> operator +(NDArray<Type> nD, double v) => nD.Apply(i => OpsT.Add(i, v));
