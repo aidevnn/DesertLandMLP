@@ -504,16 +504,8 @@ namespace DesertLandMLP
 
         #region Static Utilities
         private static Random random;
-        private static Random GetRandom
-        {
-            get
-            {
-                if (random == null)
-                    random = new Random((int)DateTime.Now.Ticks);
 
-                return random;
-            }
-        }
+        private static Random GetRandom => random ?? (random = new Random((int)DateTime.Now.Ticks));
 
         public static int ShapeLength(int[] shape) => shape.Aggregate(1, (a, i) => a * i);
 
