@@ -93,7 +93,7 @@ namespace DesertLandMLP
             int tot = 0;
             foreach (var layer in layers)
             {
-                Console.WriteLine($"Layer: {layer.Name,-10} Parameters: {layer.Parameters,3} Nodes[In:{layer.Inputs,2} -> Out:{layer.Outputs}]");
+                Console.WriteLine($"Layer: {layer.Name,-10} Parameters: {layer.Parameters,3} Weights[In:{layer.Inputs,2} -> Out:{layer.Outputs}]");
                 tot += layer.Parameters;
             }
 
