@@ -7,10 +7,10 @@ Simple MultiLayerPerceptron with NumPy like backend written in C# for computing.
 Hello World! Xor MLP
 Summary
 Input Shape:2
-Layer: Dense      Parameters:  24 Nodes[In: 2 -> Out:8]
-Layer: TANH       Parameters:   0 Nodes[In: 8 -> Out:8]
-Layer: Dense      Parameters:   9 Nodes[In: 8 -> Out:1]
-Layer: SIGMOID    Parameters:   0 Nodes[In: 1 -> Out:1]
+Layer: Dense      Parameters:  24 Weights[In: 2 -> Out:8]
+Layer: TANH       Parameters:   0 Weights[In: 8 -> Out:8]
+Layer: Dense      Parameters:   9 Weights[In: 8 -> Out:1]
+Layer: SIGMOID    Parameters:   0 Weights[In: 1 -> Out:1]
 Output Shape:1
 Total Parameters:33
 
