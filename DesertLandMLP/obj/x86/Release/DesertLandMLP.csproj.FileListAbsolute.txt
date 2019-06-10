@@ -1,0 +1,3 @@
+/home/ilyas/ProjectsCSharp/DesertLandMLP/DesertLandMLP/bin/Release/DesertLandMLP.exe
+/home/ilyas/ProjectsCSharp/DesertLandMLP/DesertLandMLP/obj/x86/Release/DesertLandMLP.csproj.CoreCompileInputs.cache
+/home/ilyas/ProjectsCSharp/DesertLandMLP/DesertLandMLP/obj/x86/Release/DesertLandMLP.exe
