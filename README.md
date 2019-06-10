@@ -1,7 +1,7 @@
 # DesertLandMLP
-Simple MultiLayerPerceptron with NumPy like backend written in C# for computing.
+Simple MultiLayerPerceptron with NumPy like NDArray backend written in C#.
 
-## Output
+### Output
 
 ```
 Hello World! Xor MLP
