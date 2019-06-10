@@ -7,7 +7,9 @@ namespace DesertLandMLP
     {
         static void Run<Type>()
         {
-            Console.WriteLine($"Hello World! Xor MLP. Backend NDArray<{typeof(Type).Name}>");
+            Console.WriteLine($"Hello World! Xor MLP.");
+            Console.WriteLine($"Backend NDArray<{typeof(Type).Name}>");
+            Console.WriteLine();
 
             var net = new Network<Type>(new SGD<Type>(0.15), new CrossEntropy<Type>());
             net.AddLayer(new DenseLayer<Type>(8, inputShape: 2));
@@ -21,8 +23,7 @@ namespace DesertLandMLP
             var X = (new NDArray<double>(new double[4, 2] { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 } })).Cast<Type>();
             var y = (new NDArray<double>(new double[4, 1] { { 0 }, { 1 }, { 1 }, { 0 } })).Cast<Type>();
 
-            Console.WriteLine("X Shape: {0}", X.Shape.Glue("x"));
-            Console.WriteLine("y Shape: {0}", y.Shape.Glue("x"));
+            Console.WriteLine("Training Data. X Shape: {0}; y Shape: {1}", X.Shape.Glue("x"), y.Shape.Glue("x"));
 
             var sw = Stopwatch.StartNew();
             net.Fit(X, y, 1000, displayEpochs: 100);
@@ -37,8 +38,8 @@ namespace DesertLandMLP
 
         public static void Main(string[] args)
         {
-            //Run<float>();
-            Run<double>();
+            Run<float>();
+            //Run<double>();
         }
     }
 }

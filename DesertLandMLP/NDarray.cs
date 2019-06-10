@@ -12,6 +12,8 @@ namespace DesertLandMLP
 
     public abstract class Ops<Type>
     {
+        public Type Zero;
+
         public abstract Type Neg(Type a);
         public abstract Type Add(Type a, Type b);
         public abstract Type Add<U>(Type a, U b);
@@ -448,7 +450,7 @@ namespace DesertLandMLP
 
             for (int m = 0; m < dim; ++m)
             {
-                double sum = 0;
+                Type sum = OpsT.Zero;
                 nd.Index2Array(m, idx);
 
                 for (int k = 0; k < nshape.Length; ++k)
@@ -462,7 +464,7 @@ namespace DesertLandMLP
                     idxArr0[length0 - 1] = idxArr1[length1 - 2] = i;
                     nD0.Array2Index(idxArr0, out int idx0);
                     nD1.Array2Index(idxArr1, out int idx1);
-                    sum += Convert.ToDouble(nD0.items[idx0]) * Convert.ToDouble(nD1.items[idx1]);
+                    sum = OpsT.Add(sum, OpsT.Mul(nD0.items[idx0], nD1.items[idx1]));
                 }
 
                 nd.items[m] = (Type)Convert.ChangeType(sum, typeof(Type));
