@@ -39,5 +39,5 @@ Prediction
 [1 1] = [0] -> [0.003462]
 ```
 
-Base code for layers / activations / network was in python and comes from this repo https://github.com/eriklindernoren/ML-From-Scratch
+Base code for layers / activations / network was in python and comes from this very great and useful ML repo https://github.com/eriklindernoren/ML-From-Scratch
 
