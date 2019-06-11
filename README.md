@@ -1,5 +1,6 @@
 # DesertLandMLP
 Simple MultiLayerPerceptron with multidimensionnal NDArray backend written in C#.
+Base code for layers / activations / network is in python and comes from this repo https://github.com/eriklindernoren/ML-From-Scratch
 
 ### Output
 
