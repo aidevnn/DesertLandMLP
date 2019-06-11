@@ -1,6 +1,5 @@
 # DesertLandMLP
 Simple MultiLayerPerceptron with multidimensionnal NDArray backend written in C#.
-Base code for layers / activations / network is in python and comes from this repo https://github.com/eriklindernoren/ML-From-Scratch
 
 ### Output
 
@@ -39,3 +38,6 @@ Prediction
 [0 1] = [1] -> [0.997623]
 [1 1] = [0] -> [0.003462]
 ```
+
+Base code for layers / activations / network was in python and comes from this repo https://github.com/eriklindernoren/ML-From-Scratch
+
