@@ -84,7 +84,7 @@ namespace DesertLandMLP
         private NDArray<Type> W, w0, layerInput;
         private IOptimizer<Type> WOpt, w0Opt;
 
-        public override int Parameters => NumDN.ShapeElements(W.Shape) + NumDN.ShapeElements(w0.Shape);
+        public override int Parameters => NumDN.ShapeCapacity(W.Shape) + NumDN.ShapeCapacity(w0.Shape);
 
         public DenseLayer(int nodes, int? inputShape = null)
         {
