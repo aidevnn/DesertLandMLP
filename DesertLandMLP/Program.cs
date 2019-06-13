@@ -11,7 +11,7 @@ namespace DesertLandMLP
             Console.WriteLine($"Backend NDArray<{typeof(Type).Name}>");
             Console.WriteLine();
 
-            var net = new Network<Type>(new SGD<Type>(0.15), new CrossEntropy<Type>());
+            var net = new Network<Type>(new SGD<Type>(0.015), new CrossEntropy<Type>());
             net.AddLayer(new DenseLayer<Type>(8, inputShape: 2));
             //net.AddLayer(new TanhLayer());
             //net.AddLayer(new DenseLayer(6));
@@ -26,7 +26,7 @@ namespace DesertLandMLP
             Console.WriteLine("Training Data. X Shape: {0}; y Shape: {1}", X.Shape.Glue("x"), y.Shape.Glue("x"));
 
             var sw = Stopwatch.StartNew();
-            net.Fit(X, y, 1000, displayEpochs: 100);
+            net.Fit(X, y, 10000, displayEpochs: 1000);
             Console.WriteLine($"Time:{sw.ElapsedMilliseconds} ms");
             Console.WriteLine();
 

@@ -140,7 +140,7 @@ namespace DesertLandMLP
 
         public NDArray(params int[] shape)
         {
-            int dim = NumDN.ShapeLength(shape);
+            int dim = NumDN.ShapeElements(shape);
             if (dim <= 0)
                 throw new ArgumentException();
 
@@ -150,7 +150,7 @@ namespace DesertLandMLP
 
         public NDArray(Type v, int[] shape)
         {
-            int dim = NumDN.ShapeLength(shape);
+            int dim = NumDN.ShapeElements(shape);
             if (dim <= 0)
                 throw new ArgumentException();
 
@@ -160,7 +160,7 @@ namespace DesertLandMLP
 
         public NDArray(Type[] nd, int[] shape)
         {
-            int dim = NumDN.ShapeLength(shape);
+            int dim = NumDN.ShapeElements(shape);
             if (dim <= 0)
                 throw new ArgumentException();
 
@@ -208,7 +208,7 @@ namespace DesertLandMLP
                 if (i >= Shape[0] || i < -1)
                     throw new ArgumentException();
 
-                var dim0 = NumDN.ShapeLength(Shape);
+                var dim0 = NumDN.ShapeElements(Shape);
                 var dim1 = dim0 / Shape[0];
                 var nshape = Shape.Skip(1).ToArray();
 
@@ -221,8 +221,8 @@ namespace DesertLandMLP
             }
             set
             {
-                var dim0 = NumDN.ShapeLength(Shape);
-                var dim1 = NumDN.ShapeLength(value.Shape);
+                var dim0 = NumDN.ShapeElements(Shape);
+                var dim1 = NumDN.ShapeElements(value.Shape);
                 if (dim0 / dim1 != Shape[0] || i >= Shape[0] || i < 0)
                     throw new ArgumentException();
 
@@ -304,7 +304,7 @@ namespace DesertLandMLP
         {
             get
             {
-                var dim = NumDN.ShapeLength(Shape);
+                var dim = NumDN.ShapeElements(Shape);
                 var nshape = Shape.Reverse().ToArray();
                 var nd = new NDArray<Type>(nshape);
 
@@ -330,8 +330,8 @@ namespace DesertLandMLP
         #region Broadcast, ElementOps, TensorDot
         public NDArray<Type> ReShape(params int[] args)
         {
-            int oldDim = NumDN.ShapeLength(Shape);
-            int newDim = NumDN.ShapeLength(args);
+            int oldDim = NumDN.ShapeElements(Shape);
+            int newDim = NumDN.ShapeElements(args);
             if (oldDim != newDim)
                 throw new ArgumentException();
 
@@ -367,7 +367,7 @@ namespace DesertLandMLP
                 nshape[k] = Math.Max(idx0, idx1);
             }
 
-            int dim = NumDN.ShapeLength(nshape);
+            int dim = NumDN.ShapeElements(nshape);
             var nd = new NDArray<Type>(nshape);
             var idxArr = new int[sLength];
 
@@ -398,7 +398,7 @@ namespace DesertLandMLP
                 nshape[k] = Math.Max(idx0, idx1);
             }
 
-            int dim = NumDN.ShapeLength(nshape);
+            int dim = NumDN.ShapeElements(nshape);
             var nd = new NDArray<Type>(nshape);
 
             var idxArr0 = new int[sLength0];
@@ -426,9 +426,9 @@ namespace DesertLandMLP
 
             int length0 = nD0.Shape.Length;
             int length1 = nD1.Shape.Length;
-            int piv = nD0.Shape.Last();
+            int commonDim = nD0.Shape.Last();
 
-            if (piv != nD1.Shape[length1 - 2])
+            if (commonDim != nD1.Shape[length1 - 2])
                 throw new ArgumentException($"Cannot multiply {nD0.Shape.Glue("x")} and {nD1.Shape.Glue("x")}");
 
             int[] nshape = new int[length0 + length1 - 2];
@@ -443,23 +443,23 @@ namespace DesertLandMLP
 
             int[] idxArr0 = new int[length0];
             int[] idxArr1 = new int[length1];
-            int[] idx = new int[nshape.Length];
+            int[] idxNDArr = new int[nshape.Length];
 
-            int dim = NumDN.ShapeLength(nshape);
+            int dim = NumDN.ShapeElements(nshape);
             var nd = new NDArray<Type>(nshape);
 
             for (int m = 0; m < dim; ++m)
             {
                 Type sum = OpsT.Zero;
-                nd.Index2Array(m, idx);
+                nd.Index2Array(m, idxNDArr);
 
                 for (int k = 0; k < nshape.Length; ++k)
                 {
-                    if (k < length0 - 1) idxArr0[idxInfos[k]] = idx[k];
-                    else idxArr1[idxInfos[k]] = idx[k];
+                    if (k < length0 - 1) idxArr0[idxInfos[k]] = idxNDArr[k];
+                    else idxArr1[idxInfos[k]] = idxNDArr[k];
                 }
 
-                for (int i = 0; i < piv; ++i)
+                for (int i = 0; i < commonDim; ++i)
                 {
                     idxArr0[length0 - 1] = idxArr1[length1 - 2] = i;
                     nD0.Array2Index(idxArr0, out int idx0);
@@ -495,7 +495,6 @@ namespace DesertLandMLP
         public static NDArray<Type> operator /(NDArray<Type> a, NDArray<Type> b) => ElementOps(a, b, (ia, ib) => OpsT.Div(ia, ib));
 
         #endregion
-
     }
 
     public static class NumDN
@@ -507,12 +506,12 @@ namespace DesertLandMLP
 
         private static Random GetRandom => random ?? (random = new Random((int)DateTime.Now.Ticks));
 
-        public static int ShapeLength(int[] shape) => shape.Aggregate(1, (a, i) => a * i);
+        public static int ShapeElements(int[] shape) => shape.Aggregate(1, (a, i) => a * i);
 
         public static NDArray<V> Apply<U, V>(NDArray<U> a, NDArray<U> b, Func<U, U, V> func)
         {
-            int dim = ShapeLength(a.Shape);
-            if (dim != ShapeLength(b.Shape))
+            int dim = ShapeElements(a.Shape);
+            if (dim != ShapeElements(b.Shape))
                 throw new ArgumentException();
 
             var nd = new NDArray<V>(a.Shape);
@@ -528,7 +527,7 @@ namespace DesertLandMLP
             if (shape.Length == 0)
                 shape = new int[1] { 1 };
 
-            int dim = ShapeLength(shape);
+            int dim = ShapeElements(shape);
             if (dim <= 0 || min >= max)
                 throw new ArgumentException();
 
@@ -543,7 +542,7 @@ namespace DesertLandMLP
             if (shape.Length == 0)
                 shape = new int[] { 1 };
 
-            int dim = ShapeLength(shape);
+            int dim = ShapeElements(shape);
             if (dim <= 0 || min >= max)
                 throw new ArgumentException();
 
@@ -558,7 +557,7 @@ namespace DesertLandMLP
             if (shape.Length == 0)
                 shape = new int[] { 1 };
 
-            int dim = ShapeLength(shape);
+            int dim = ShapeElements(shape);
             if (dim <= 0 || min >= max)
                 throw new ArgumentException();
 
@@ -573,7 +572,7 @@ namespace DesertLandMLP
             if (shape.Length == 0)
                 shape = new int[] { 1 };
 
-            int dim = ShapeLength(shape);
+            int dim = ShapeElements(shape);
             if (dim <= 0 || min >= max)
                 throw new ArgumentException();
 
