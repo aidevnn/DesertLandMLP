@@ -103,15 +103,24 @@ namespace DesertLandMLP
 
         public IOptimizer<Type> Clone() => new SGD<Type>(lr, momentum);
 
+        /*
+        def update(self, w, grad_wrt_w):
+            # If not initialized
+            if self.w_updt is None:
+                self.w_updt = np.zeros(np.shape(w))
+            # Use momentum if set
+            self.w_updt = self.momentum * self.w_updt + (1 - self.momentum) * grad_wrt_w
+            # Move against the gradient to minimize loss
+            return w - self.learning_rate * self.w_updt                
+         */
         public NDArray<Type> Update(NDArray<Type> w, NDArray<Type> g)
         {
             if (weightsUpdate == null)
                 weightsUpdate = NDArray<Type>.Zeros(w.Shape);
 
-            if (Math.Abs(momentum) > 1e-15)
-                weightsUpdate = momentum * w + (1 - momentum) * g;
+            weightsUpdate = momentum * weightsUpdate + (1 - momentum) * g;
 
-            return w - lr * g;
+            return w - lr * weightsUpdate;
         }
     }
 }
