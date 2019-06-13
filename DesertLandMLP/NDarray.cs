@@ -451,12 +451,12 @@ namespace DesertLandMLP
             for (int m = 0; m < dim; ++m)
             {
                 Type sum = OpsT.Zero;
-                nd.Index2Array(m, idxNDArr);
+                nd.Index2Array(m, idxNArr);
 
                 for (int k = 0; k < nshape.Length; ++k)
                 {
-                    if (k < length0 - 1) idxArr0[idxInfos[k]] = idxNDArr[k];
-                    else idxArr1[idxInfos[k]] = idxNDArr[k];
+                    if (k < length0 - 1) idxArr0[idxInfos[k]] = idxNArr[k];
+                    else idxArr1[idxInfos[k]] = idxNArr[k];
                 }
 
                 for (int i = 0; i < commonDim; ++i)
