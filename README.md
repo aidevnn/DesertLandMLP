@@ -1,5 +1,5 @@
 # DesertLandMLP
-Simple MultiLayerPerceptron with multidimensionnal NDArray backend written in C#.
+Simple MultiLayerPerceptron with dummy multidimensionnal NDArray backend written in C#.
 
 ### Output
 
